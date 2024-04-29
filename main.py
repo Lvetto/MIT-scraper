@@ -69,7 +69,8 @@ def download_pdfs(pdf_list, folder="out"):
             print(f"Errore nel salvare il file '{filename}': {e}")
 
 if __name__ == "__main__":
-    url = input("Inserisci l'URL della pagina 'lecture notes' di MIT OpenCourseWare: ")
+    url = input("Inserisci l'URL della pagina del corso di MIT OpenCourseWare: ")
+    url = f"{url}resources/lecture-notes/"
     splitted_url = url.split("/")
     title_index = [n for n,_ in enumerate(splitted_url[1:]) if splitted_url[n-1] == "courses"][0]
     course_name = splitted_url[title_index]
