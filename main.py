@@ -70,14 +70,17 @@ def download_pdfs(pdf_list, folder="out"):
 
 if __name__ == "__main__":
     url = input("Inserisci l'URL della pagina del corso di MIT OpenCourseWare: ")
-    url = f"{url}resources/lecture-notes/"
     splitted_url = url.split("/")
     title_index = [n for n,_ in enumerate(splitted_url[1:]) if splitted_url[n-1] == "courses"][0]
     course_name = splitted_url[title_index]
-    soup = get_soup_from_url(url)
+    soup = get_soup_from_url(f"{url}resources/lecture-notes/")
     if soup is not None:
         items = get_lecture_data(soup)
         items = filter_pdf(items)
+        if (len(items) == 0):
+            soup = get_soup_from_url(f"{url}resources/lecture-videos/")
+            items = get_lecture_data(soup)
+            items = filter_pdf(items)
         download_pdfs(items, course_name)
     else:
         print("Impossibile ottenere l'oggetto BeautifulSoup.")
